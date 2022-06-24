@@ -28,5 +28,5 @@ export const mouseControl = (direction, args, duplex) => {
 
 export const mousePosition = (duplex) => {
   const { x, y } = robot.getMousePos();
-  return duplex.write(`mouse_position ${x},${y}`);
+  return duplex.write(`mouse_position ${x},${y}\0`);
 };

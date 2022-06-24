@@ -1,7 +1,8 @@
 import { drawCircle, drawRectangular, drawSquare } from "../functions/drawShapes.js";
 import { mouseControl, mousePosition } from "../functions/mouseControl.js";
+import { printScreen } from "../functions/printScreen.js";
 
-export const parseInput = (data, duplex) => {
+export const parseInput = async(data, duplex) => {
     console.log(data.toString(), '++++++');
     let [command, ...args] = data.toString().split(" ");
 
@@ -9,8 +10,10 @@ export const parseInput = (data, duplex) => {
     mouseControlHandler(command, args, duplex)
     } else if(command.startsWith("draw_")) {
         drawShapesHandler(command, args, duplex)
-    }
-  };
+    } else if(command.startsWith("prnt_")){
+        printScreen(duplex)
+   };
+}
 
 const mouseControlHandler = (command, args, duplex) => {
     return command === 'mouse_position' ? mousePosition(duplex) : mouseControl(command, args, duplex)

@@ -1,5 +1,6 @@
 import robot from "robotjs";
-export const mouseControl = (direction, args, draw = '') => {
+
+export const mouseControl = (direction, args, duplex) => {
   let { x, y } = robot.getMousePos();
   const step = Number(args[0]) || 0;
 
@@ -21,8 +22,11 @@ export const mouseControl = (direction, args, draw = '') => {
   if (Object.keys(mouseCommandObj).includes(direction)) {
     mouseCommandObj[direction]();
     robot.moveMouse(x, y);
-  } else {
-    const mousePosition = `mouse_position ${x},${y}`;
-    return { mousePosition };
   }
+  return duplex.write(`${direction}:${step}`);
+};
+
+export const mousePosition = (duplex) => {
+  const { x, y } = robot.getMousePos();
+  return duplex.write(`mouse_position ${x},${y}`);
 };

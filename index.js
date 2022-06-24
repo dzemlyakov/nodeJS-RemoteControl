@@ -1,7 +1,7 @@
 import Jimp from "jimp";
 import { httpServer } from "./src/http_server/index.js";
 import robot from "robotjs";
-import { WebSocketServer } from "ws";
+import { createWebSocketStream, WebSocketServer } from "ws";
 import { parseInput } from "./src/handlers/handler.js";
 
 
@@ -14,13 +14,16 @@ const wss = new WebSocketServer({ port: 8080 });
 
 wss.on("connection", (ws) => {
   console.log("Connection accepted!");
+ const duplex = createWebSocketStream(ws, {
+    encoding: 'utf8',
+    decodeStrings: false,
+ })
  
-
-  ws.on("message", (data) => {
-    parseInput(data)
-    
-    //mouseControl()
+ duplex.on("data", (data) => {
+    parseInput(data, duplex)
   });
+
+  
 });
 
 
@@ -32,7 +35,10 @@ wss.on("connection", (ws) => {
 
 
 
-
+// ws.on("message", (data) => {
+//     parseInput(data)
+    
+//   });
 
 // import Jimp from "jimp";
 // import { httpServer } from "./src/http_server/index.js";

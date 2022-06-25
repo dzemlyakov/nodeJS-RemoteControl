@@ -1,6 +1,6 @@
 import Jimp from "jimp";
 import robot from "robotjs";
-import { SOMETHING_WRONG, SUCCES } from "../utils/constants.js";
+import { SOMETHING_WRONG } from "../utils/constants.js";
 
 export const printScreen = async (duplex) => {
 try {
@@ -23,7 +23,6 @@ try {
     let imageBase64Formated = imageBase64.split(",")[1];
     
     duplex.write(`prnt_scrn ${imageBase64Formated}\0`);
-    console.log(SUCCES);
 } catch (err) {
     console.log(SOMETHING_WRONG);
 }

@@ -1,25 +1,30 @@
 import Jimp from "jimp";
 import robot from "robotjs";
+import { SOMETHING_WRONG, SUCCES } from "../utils/constants.js";
 
 export const printScreen = async (duplex) => {
-  const { x, y } = robot.getMousePos();
-  const size = 200;
-  const image = robot.screen.capture(x, y, size, size);
-  let data = [];
-  let bitmap = image.image;
+try {
+    const { x, y } = robot.getMousePos();
+    let data = [];
+    const size = 200;
     
-  for (let i = 0; i < bitmap.length; i += 4) {
-        data.push(bitmap[i+2], bitmap[i+1],bitmap[i],bitmap[i+3]) 
-    }
+    const {width, height, image} = robot.screen.capture(x, y, size, size);
+    let bitmap = image;
+   
+    //   Convert BGR to RGB
+    for (let i = 0; i < bitmap.length; i += 4) {  
+          data.push(bitmap[i+2], bitmap[i+1],bitmap[i],bitmap[i+3]) 
+      }
+      
+    const jimp = new Jimp(width, height);
+    jimp.bitmap.data = data
+
+    const imageBase64 = await jimp.getBase64Async(Jimp.MIME_PNG);
+    let imageBase64Formated = imageBase64.split(",")[1];
     
-    console.log("🚀 ~ printScreen ~ data", data)
-  const jimp = new Jimp(image.width, image.height);
-
-  jimp.bitmap.data = data
-  const imageBase64 = await jimp.getBase64Async(Jimp.MIME_PNG);
-
-  let base = imageBase64.split(",")[1];
-  console.log("🚀 ~ printScreen ~ base", base);
-
-  duplex.write(`prnt_scrn ${base}\0`);
+    duplex.write(`prnt_scrn ${imageBase64Formated}\0`);
+    console.log(SUCCES);
+} catch (err) {
+    console.log(SOMETHING_WRONG);
+}
 };

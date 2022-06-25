@@ -6,7 +6,7 @@ export const drawCircle = async (radius) => {
   let { x, y } = robot.getMousePos();
   robot.mouseClick();
   for (let i = 0; i <= Math.PI * 2; i += 0.02) {
-    const coordinateX = x + radius * Math.cos(i) - radius;
+    const coordinateX = (x + radius * Math.cos(i)) - radius;   
     const coordinateY = y + radius * Math.sin(i);
     
     robot.mouseToggle("down");

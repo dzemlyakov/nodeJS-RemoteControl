@@ -2,12 +2,13 @@ import {
   drawCircle,
   drawRectangular,
   drawSquare,
-} from "../functions/drawShapes.js";
-import { mouseControl, mousePosition } from "../functions/mouseControl.js";
-import { printScreen } from "../functions/printScreen.js";
-import { INVALID_INPUT, SOMETHING_WRONG} from "../utils/constants.js";
+} from "../functions/drawShapes";
+import { mouseControl, mousePosition } from "../functions/mouseControl";
+import { printScreen } from "../functions/printScreen";
+import { Duplex } from "../types/types";
+import { INVALID_INPUT, SOMETHING_WRONG} from "../utils/constants";
 
-export const parseInput = async (inputData, duplex) => {
+export const parseInput = async (inputData:Buffer, duplex:Duplex) => {
   try {
     const data = inputData.toString();
     console.log(`Sent from client: ${data} `);
@@ -27,7 +28,7 @@ export const parseInput = async (inputData, duplex) => {
   }
 };
 
-const mouseControlHandler = (command, args, duplex) => {
+const mouseControlHandler = (command:string, args:string[], duplex:Duplex) => {
   try {
     return command === "mouse_position"
       ? mousePosition(duplex)
@@ -37,19 +38,19 @@ const mouseControlHandler = (command, args, duplex) => {
   }
 };
 
-const drawShapesHandler = (command, args, duplex) => {
+const drawShapesHandler = (command:string, args:string[], duplex:Duplex) => {
   try {
     let dimensionsInNumberArray = args.map(Number);
     let [radius, length = 0] = dimensionsInNumberArray;
 
-    const drawCommandObj = {
-      draw_circle(radius) {
+    const drawCommandObj:any = {
+      draw_circle(radius:number) {
         drawCircle(radius);
       },
-      draw_square(width) {
+      draw_square(width:number) {
         drawSquare(width);
       },
-      draw_rectangle(width, length) {
+      draw_rectangle(width:number, length:number) {
         drawRectangular(width, length);
       },
     };

@@ -1,8 +1,8 @@
-import { httpServer } from "./src/http_server/index.js";
+import { httpServer } from "./src/http_server/index";
 import { createWebSocketStream, WebSocketServer } from "ws";
-import { parseInput } from "./src/handlers/handler.js";
+import { parseInput } from "./src/handlers/handler";
 import "dotenv/config";
-import { SOMETHING_WRONG } from "./src/utils/constants.js";
+import { SOMETHING_WRONG } from "./src/utils/constants";
 
 const HTTP_PORT = process.env.PORT || 3000;
 
@@ -18,7 +18,7 @@ wss.on("connection", (ws) => {
     decodeStrings: false,
   });
 
-  duplex.on("data", (data) => {
+  duplex.on("data", (data:Buffer) => {
     try {
       parseInput(data, duplex);
     } catch (err) {

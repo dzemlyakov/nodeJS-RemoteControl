@@ -1,8 +1,8 @@
 import robot from "robotjs";
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms:number) => new Promise((r) => setTimeout(r, ms));
 
-export const drawCircle = async (radius) => {
+export const drawCircle = async (radius:number) => {
   let { x, y } = robot.getMousePos();
   robot.mouseClick();
   for (let i = 0; i <= Math.PI * 2; i += 0.02) {
@@ -15,7 +15,7 @@ export const drawCircle = async (radius) => {
   robot.mouseToggle("up");
 };
 
-export const drawSquare = async (width) => {
+export const drawSquare = async (width:number) => {
   let { x, y } = robot.getMousePos();
 
   robot.mouseClick();
@@ -34,7 +34,7 @@ export const drawSquare = async (width) => {
   robot.mouseToggle("up");
 };
 
-export const drawRectangular = async (width, length) => {
+export const drawRectangular = async (width:number, length:number) => {
   let { x, y } = robot.getMousePos();
 
   robot.mouseClick();

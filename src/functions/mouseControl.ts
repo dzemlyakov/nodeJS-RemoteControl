@@ -1,10 +1,11 @@
 import robot from "robotjs";
+import { Duplex } from "../types/types";
 
-export const mouseControl = (direction, args, duplex) => {
+export const mouseControl = (direction:string, args:string[], duplex:Duplex) => {
   let { x, y } = robot.getMousePos();
   const step = Number(args[0]) || 0;
 
-  const mouseCommandObj = {
+  const mouseCommandObj:any = {
     mouse_up() {
       return (y = y - step);
     },
@@ -26,7 +27,7 @@ export const mouseControl = (direction, args, duplex) => {
   return duplex.write(`${direction}:${step}`);
 };
 
-export const mousePosition = (duplex) => {
+export const mousePosition = (duplex:Duplex) => {
   const { x, y } = robot.getMousePos();
   return duplex.write(`mouse_position ${x},${y}\0`);
 };

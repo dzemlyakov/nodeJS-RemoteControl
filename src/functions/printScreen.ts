@@ -1,11 +1,12 @@
 import Jimp from "jimp";
-import robot from "robotjs";
-import { SOMETHING_WRONG } from "../utils/constants.js";
+import robot, { Bitmap } from "robotjs";
+import { Duplex } from "../types/types";
+import { SOMETHING_WRONG } from "../utils/constants";
 
-export const printScreen = async (duplex) => {
+export const printScreen = async (duplex:Duplex) => {
 try {
     const { x, y } = robot.getMousePos();
-    let data = [];
+    let data:any = [];
     const size = 200;
     
     const {width, height, image} = robot.screen.capture(x, y, size, size);
@@ -16,7 +17,7 @@ try {
           data.push(bitmap[i+2], bitmap[i+1],bitmap[i],bitmap[i+3]) 
       }
       
-    const jimp = new Jimp(width, height);
+    let jimp = new Jimp(width, height);
     jimp.bitmap.data = data
 
     const imageBase64 = await jimp.getBase64Async(Jimp.MIME_PNG);

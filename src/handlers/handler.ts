@@ -23,6 +23,7 @@ export const parseInput = async (inputData:Buffer, duplex:Duplex) => {
     } else {
       console.log(INVALID_INPUT);
     }
+    console.log(`${command} has been completed sucssefull`);
   } catch (err) {
     console.log(SOMETHING_WRONG, err);
   }

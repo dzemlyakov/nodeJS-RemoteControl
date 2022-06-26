@@ -58,7 +58,7 @@ const drawShapesHandler = (command:string, args:string[], duplex:Duplex) => {
     if (Object.keys(drawCommandObj).includes(command)) {
       drawCommandObj[command](radius, length);
     }
-    duplex.write(`${command}:${radius}`);
+    duplex.write(`${command}:${radius}\0`);
   } catch (err) {
     console.log(SOMETHING_WRONG, err);
   }

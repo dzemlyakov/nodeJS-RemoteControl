@@ -1,0 +1,14 @@
+test.js
+trash
+.DS_Store
+.sass-cache
+.tmp
+.rvmrc
+.trashes
+node_modules/
+.node_modules
+public
+build
+.env
+.vscode
+*~
